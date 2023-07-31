@@ -1,11 +1,11 @@
 import { chromium, Page } from 'playwright';
-import { setupTest, deleteOrders } from '../utils.js';
-import CatalogPage from '../pages/catalogPage.js';
-import { CartPage, PlaceOrderModal } from '../pages/cartPage.js';
-import testConfig from '../config.js';
-import { SignUpModal, LoginModal } from '../components/authComponent.js';
-import ProductPage from '../pages/productPage.js';
-import { validateViewData, validateCartData, addToCart, loginAPI } from '../api/apiRequest.js';
+import { setupTest, deleteOrders } from '../utils';
+import CatalogPage from '../pages/catalogPage';
+import { CartPage, PlaceOrderModal } from '../pages/cartPage';
+import testConfig from '../config';
+import { SignUpModal, LoginModal } from '../components/authComponent';
+import ProductPage from '../pages/productPage';
+import { validateViewData, validateCartData, addToCart, loginAPI } from '../api/apiRequest';
 
 describe('This is a UI test flow containing several tests in 1 file.', () => {
   let catalogPage: CatalogPage;
@@ -68,10 +68,8 @@ describe('This is a UI test flow containing several tests in 1 file.', () => {
 
   it('Place an order', async () => {
     await cartPage.clickPlaceOrderButton();
-    await page.waitForTimeout(1000);
     cartPage.placeOrderModal.totalPriceModalValidate('1750');
     cartPage.placeOrderModal.clickCloseButton();
-    await page.waitForTimeout(3000);
     await deleteOrders(page);
   });
 
@@ -84,7 +82,8 @@ describe('This is a UI test flow containing several tests in 1 file.', () => {
     expect(cartData.data).toBeDefined();
     expect(cartData.data.Items.length).toBe(1);
 
-    const cartViewresponse = await validateViewData(loginResponse, 1);
+    // const cartViewresponse = await validateViewData(loginResponse, 1);
+    const cartViewresponse = await validateViewData();
     expect(cartViewresponse.data).toBeDefined(); // Verify that the response is defined
     expect(cartViewresponse.data.id).toBe(3); // Verify a specific property in the response
     expect(cartViewresponse.data.price).toBe(650);

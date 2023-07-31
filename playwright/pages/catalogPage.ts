@@ -1,5 +1,15 @@
+import { Page } from 'playwright';
+
 class CatalogPage {
-  constructor(page) {
+  private page: Page;
+  private signUpButton: string;
+  private loginButton: string;
+  private homeHeaderButtonSelector: string;
+  private cartHeaderButtonSelector: string;
+  private logoutHeaderButtonSelector: string;
+  private userNameElementSelector: string;
+
+  constructor(page: Page) {
     this.page = page;
     this.signUpButton = '#signin2';
     this.loginButton = '#login2';
@@ -9,31 +19,25 @@ class CatalogPage {
     this.userNameElementSelector = '#nameofuser';
   }
 
-  async clickSignUpButton() {
+  async clickSignUpButton(): Promise<void> {
     await this.page.click(this.signUpButton);
   }
 
-  async clickLoginButton() {
+  async clickLoginButton(): Promise<void> {
     await this.page.click(this.loginButton);
   }
 
-  async clickHomeHeaderButton() {
+  async clickHomeHeaderButton(): Promise<void> {
     await this.page.click(this.homeHeaderButtonSelector);
   }
 
-  async clickCartHeaderButton() {
+  async clickCartHeaderButton(): Promise<void> {
     await this.page.click(this.cartHeaderButtonSelector);
   }
 
-  async clickLogoutHeaderButton() {
+  async clickLogoutHeaderButton(): Promise<void> {
     await this.page.click(this.logoutHeaderButtonSelector);
-  }
-
-  async getUserName() {
-    const userNameElement = await this.page.$(this.userNameElementSelector);
-    const userNameText = await this.page.textContent(userNameElement);
-    return userNameText;
   }
 }
 
-module.exports = CatalogPage;
+export default CatalogPage;

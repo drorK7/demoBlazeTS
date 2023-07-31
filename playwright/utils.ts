@@ -1,21 +1,20 @@
-const { chromium } = require('playwright');
-const testConfig = require('./config.js');
+import { chromium, Browser, Page } from 'playwright';
+import testConfig from './config';
 
-async function setupBrowserPage() {
+async function setupBrowserPage(): Promise<{ browser: Browser, page: Page }> {
   const browser = await chromium.launch(testConfig.browserOptions);
   const page = await browser.newPage();
   return { browser, page };
 }
 
-async function setupTest() {
+async function setupTest(): Promise<{ browser: Browser, page: Page }> {
   const { browser, page } = await setupBrowserPage();
   return { browser, page };
 }
 
-async function searchAndClickNextPage(page, searchText) {
+async function searchAndClickNextPage(page: Page, searchText: string): Promise<void> {
   while (true) {
     // Check if the search text exists on the current page
-    
     const searchElement = await page.$(`.hrefch:has-text("${searchText}")`);
     if (searchElement) {
       // If found, click on it
@@ -36,13 +35,11 @@ async function searchAndClickNextPage(page, searchText) {
   }
 }
 
-async function deleteOrders(page) {
+async function deleteOrders(page: Page): Promise<void> {
   while (await page.$('.success')) {
     await page.click('a[href="#"]:has-text("Delete")');
     await page.waitForTimeout(5000);
   }
 }
 
-
-
-module.exports = { setupTest , searchAndClickNextPage , deleteOrders };
+export { setupTest, searchAndClickNextPage, deleteOrders };
