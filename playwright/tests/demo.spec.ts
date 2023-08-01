@@ -78,14 +78,13 @@ describe('This is a UI test flow containing several tests in 1 file.', () => {
     await addToCart(loginResponse);
     const cartData = await validateCartData(loginResponse);
 
-    // Assertions on the response and its content
     expect(cartData.data).toBeDefined();
     expect(cartData.data.Items.length).toBe(1);
 
-    // const cartViewresponse = await validateViewData(loginResponse, 1);
+
     const cartViewresponse = await validateViewData();
-    expect(cartViewresponse.data).toBeDefined(); // Verify that the response is defined
-    expect(cartViewresponse.data.id).toBe(3); // Verify a specific property in the response
+    expect(cartViewresponse.data).toBeDefined();
+    expect(cartViewresponse.data.id).toBe(3);
     expect(cartViewresponse.data.price).toBe(650);
     expect(cartViewresponse.data.title).toBe('Nexus 6');
   });

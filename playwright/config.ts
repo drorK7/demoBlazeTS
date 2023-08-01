@@ -3,7 +3,7 @@ const testConfig = {
     headless: false,
   },
   baseUrl: 'https://www.demoblaze.com',
-  username: 'testonenice1922152115',
+  username: 'testUser9100011',
   password: 'testpassword',
 };
 
